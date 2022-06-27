@@ -48,10 +48,14 @@ Some code was provided by the exercise:
     - [ ] Constructor
         - Take active deck on creation
         - Draws 2 cards
+    - [ ] Extend with Dealer
+        - [ ] Methods
+            - hit
+                - Keeps going untill score >= 15 (use parent::hit();)
 2. [ ] Blackjack
     - [ ] Properties
         - player    :Player
-        - dealer    :Player
+        - dealer    :Dealer
         - deck      :Deck
     - [ ] Methods
         - getPlayer
@@ -67,5 +71,13 @@ Some code was provided by the exercise:
         - Shows Dealer side
 - [ ] Add buttons for actions with php
     - Hit
+        - Check the lost status of the player
+        - Will need the active deck (Blackjack::getDeck();)
     - Stand
+        - Hit is called on dealer
+        - if dealer != lost > Resolve winner
+        - if score===equal dealer wins
     - Surrender
+- [ ] End game
+    - Show winner
+    - destroy blackjack instance to prep for newGame();
