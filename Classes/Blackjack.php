@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-
+require_once __DIR__ . '/Deck.php';
+require_once __DIR__ . '/Player.php';
 class Blackjack{
     private Player $player;
     private Dealer $dealer;
@@ -21,6 +22,4 @@ class Blackjack{
         return $this->deck;
     }
 }
-
-
 ?>

@@ -9,8 +9,8 @@ class Player
     
     function __construct(Deck $deck){
         //Draw starting hand
-        $this->cards = $deck->drawCard();
-        $this->cards = $deck->drawCard();
+        $this->cards[] = $deck->drawCard();
+        $this->cards[] = $deck->drawCard();
 
     }
     function hit(){
@@ -34,6 +34,9 @@ class Player
     }
     function hasLost(){
         return $this->lost;
+    }
+    function getCards(){
+        return $this->cards;
     }
 }
 class Dealer extends Player{
