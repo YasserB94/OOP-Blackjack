@@ -47,12 +47,9 @@ class Dealer extends Player{
         parent::__construct($deck);
     }
     function hit($deck){
+        //Keep drawing untill score >=15
         if(parent::getScore()<15){
         parent::hit($deck);
-        //Keep drawing untill score >=15
-            parent::hit($deck);
-        }else{
-            return;
         }
     }
     function getFirstCard():Card{
