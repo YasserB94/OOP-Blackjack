@@ -31,25 +31,23 @@ Some code was provided by the exercise:
  
 ### Classes to create according to instructions:
 1. [ ] Player
-    - [ ] Properties
+    - [x] Properties
         - cards     :Array
         - won/lost  :Boolean
-    -  [ ] Methods
+    -  [x] Methods
         - hit
             - adds a card to the player and resolves score && ?>21
         - surrender
             - The dealer won _($lost=true;)_
-        - stand
-            - stay/dealer's turn
         - getScore
             - returns the player's current score
         - hasLost
             - return lost
-    - [ ] Constructor
+    - [x] Constructor
         - Take active deck on creation
         - Draws 2 cards
-    - [ ] Extend with Dealer
-        - [ ] Methods
+    - [x] Extend with Dealer
+        - [x] Methods
             - hit
                 - Keeps going untill score >= 15 (use parent::hit();)
 2. [ ] Blackjack
