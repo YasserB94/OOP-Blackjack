@@ -6,20 +6,36 @@ class Blackjack{
     private Player $player;
     private Dealer $dealer;
     private Deck $deck;
+    private bool $gameover;
     function __construct(){
         $this->deck = new Deck();
         $this->deck->shuffle();
         $this->player = new Player($this->deck);
         $this->dealer = new Dealer($this->deck);
     }
-    function getPlayer(){
+    function getPlayer():Player{
         return $this->player;
     }
-    function getDealer(){
+    function getDealer():Dealer{
         return $this->dealer;
     }
-    function getDeck(){
+    function getDeck():Deck{
         return $this->deck;
     }
+    function checkForGameOver():bool{
+        if($this->checkIfPlayerLost()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    private function checkIfPlayerLost():bool{
+        if($this->player->hasLost()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
+
 ?>

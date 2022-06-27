@@ -6,36 +6,39 @@ class Player
     //Properties
     protected array $cards;
     protected bool $lost;
+    protected int $score;
     
     function __construct(Deck $deck){
         //Draw starting hand
         $this->cards[] = $deck->drawCard();
         $this->cards[] = $deck->drawCard();
-
+        $this->lost = false;
     }
-    function hit(){
+    function hit($deck){
         //Add a card
-        $this->cards = $deck->drawCard();
+        $this->cards[] = $deck->drawCard();
         //If new score is too high, surrender
-        if(getScore()>21){
+        if($this->getScore()>21){
             $this->surrender();
+        }else{
+            return;
         }
     }
     function surrender(){
         $this->lost = true;
     }
-    function getScore(){
+    function getScore():Int{
         //Loop over cards and make sum of card values
-        $score;
-        foreach($this->cards as $key => $value){
-            $score+=$value->getValue();
+        $this->score = 0;
+        foreach($this->cards as $key=>$value){
+            $this->score += $value->getValue();
         }
-        return $score;
+        return $this->score;
     }
-    function hasLost(){
+    function hasLost():bool{
         return $this->lost;
     }
-    function getCards(){
+    function getCards():array{
         return $this->cards;
     }
 }
@@ -43,12 +46,17 @@ class Dealer extends Player{
     function __construct(Deck $deck){
         parent::__construct($deck);
     }
-    function hit(){
-        parent::hit();
-        //Keep drawing untill score >=15
+    function hit($deck){
         if(parent::getScore()<15){
-            $this->hit();
+        parent::hit($deck);
+        //Keep drawing untill score >=15
+            parent::hit($deck);
+        }else{
+            return;
         }
+    }
+    function getFirstCard():Card{
+        return parent::getCards()[0];
     }
 }
 ?>

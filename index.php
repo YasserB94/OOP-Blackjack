@@ -14,11 +14,12 @@ require_once __DIR__ . "/Partials/head.php";
 //IF GAME WAS NOT STARTED && GAME IS NOT RUNNING
 if(!isset($_POST['startgame']) && !isset($_SESSION['game'])){
 require_once __DIR__ . "/Partials/rules.php";
-
 //IF GAME WAS STARTED
 }else if(isset($_POST['startgame'])){
     //CREATE NEW GAME
-    $_SESSION['game'] = new Blackjack();
+    $game = new Blackjack();
+    $serialized = serialize($game);
+    $_SESSION['game'] = $serialized;
     //REQUIRE GAME VIEW
     require_once __DIR__ . "/Partials/blackjack_view.php";
 }else if(isset($_SESSION['game'])){

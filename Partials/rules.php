@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);?>
 <div class="text-center">
-<div class="mx-auto my-5" style="width:30%">
+<div class="mx-auto my-5" style="width:50%">
     <h3>The Rules:</h3>
     <ul class="list-group">
         <li class="list-group-item">The closest one to 21 wins!</li>
@@ -15,6 +15,6 @@ declare(strict_types=1);?>
     </div>
     <h5>Press the button to play whenever you are ready!</h5>
 <form action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-<input type="submit" value="Play" name="startgame">
+<input class="btn btn-success" type="submit" value="--- PLAY NOW ---" name="startgame">
 </form>
 </div>
