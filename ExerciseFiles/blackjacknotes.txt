@@ -1,0 +1,6 @@
+Final push: 1 & 2: miss the word "click"
+Nice to have: reveal of dealer cards at the end
+Change code in Card.php -> add css class
+-> add note to explain why we show the score of the dealer
+rename the "surrender" method to "lose"
+-> add a nice to have "catch going bust first 2 cards"
