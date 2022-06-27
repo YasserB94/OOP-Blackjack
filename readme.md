@@ -50,16 +50,16 @@ Some code was provided by the exercise:
         - [x] Methods
             - hit
                 - Keeps going untill score >= 15 (use parent::hit();)
-2. [ ] Blackjack
-    - [ ] Properties
+2. [x] Blackjack
+    - [x] Properties
         - player    :Player
         - dealer    :Dealer
         - deck      :Deck
-    - [ ] Methods
+    - [x] Methods
         - getPlayer
         - getDealer
         - getDeck
-    - [ ] Constructor
+    - [x] Constructor
         - Initiates dealer:Player,player:Player,deck:Deck
         - Shuffles deck
 ### Index.php
