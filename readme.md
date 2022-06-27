@@ -30,7 +30,7 @@ Some code was provided by the exercise:
 >If either player has over 21 points they lose.
  
 ### Classes to create according to instructions:
-1. [ ] Player
+1. [x] Player
     - [x] Properties
         - cards     :Array
         - won/lost  :Boolean
