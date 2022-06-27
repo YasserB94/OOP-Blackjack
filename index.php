@@ -12,10 +12,10 @@ require_once __DIR__ . "/Partials/head.php";
 
 //--------LOAD PAGE CONTENT--------
 //IF GAME WAS NOT STARTED && GAME IS NOT RUNNING
-if(!isset($_POST['startgame']) && !isset($_SESSION['game'])){
+if(!isset($_POST['startgame']) && !isset($_SESSION['game']) &&!isset($_POST['restart'])){
 require_once __DIR__ . "/Partials/rules.php";
 //IF GAME WAS STARTED
-}else if(isset($_POST['startgame'])){
+}else if(isset($_POST['startgame'])||isset($_POST['restart'])){
     //CREATE NEW GAME
     $game = new Blackjack();
     $serialized = serialize($game);
