@@ -57,6 +57,7 @@ class Blackjack{
         $this->deck->shuffle();
         $this->player->startNewRound($this->deck);
         $this->dealer->startNewRound($this->deck);
+        $this->checkFor21();
     }
     function resolveGame(){
        if($this->player->hasLost()){
@@ -75,10 +76,23 @@ class Blackjack{
     }
     function checkFor21():void{
         if($this->player->getScore()===21){
-            $this->player->setBet(100);
+            if($this->player->getChips()<100){
+                $award=100;
+            }else{
+            $award = intval(floor($this->player->getChips()/100)*10);
+            }
+            $this->player->setBetEdgeCase($award/2);
+            $this->player->addChips($award);
             $this->dealer->lose();
-            $this->player->addChips(100);
-
+        }else if($this->dealer->getScore()===21){
+            if($this->player->getChips()<100){
+                $punishment = 50;
+            }else{
+                $punishment = intval(floor($this->player->getChips()/100)*10);
+            }
+            $this->player->setBetEdgeCase($punishment/2);
+            $this->player->removeChips($punishment);
+            $this->player->lose();
         }
     }
     function checkForLoser():bool{

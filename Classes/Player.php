@@ -35,6 +35,7 @@ class Player
         }
     }
     }
+
     function checkForDoubleAce($deck){
         if($this->getScore()>21){
             array_pop($this->cards);
@@ -44,6 +45,10 @@ class Player
     function setBet(int $amount):void{
         $this->bet = $amount;
         $this->removeChips($amount);
+        $this->hasBet = true;
+    }
+    function setBetEdgeCase(int $amount):void{
+        $this->bet = $amount;
         $this->hasBet = true;
     }
     function hasBet():bool{
@@ -106,6 +111,7 @@ class Player
         $this->cards[] = $newDeck->drawCard();
         $this->cards[] = $newDeck->drawCard();
         $this->bet=5;
+        $this->checkForDoubleAce($newDeck);
     }
 }
 class Dealer extends Player{
