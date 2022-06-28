@@ -11,6 +11,8 @@ class Blackjack{
         $this->deck->shuffle();
         $this->player = new Player($this->deck);
         $this->dealer = new Dealer($this->deck);
+        //Player gets dealt 21 on start = auto win 50 chips
+        $this->checkFor21();
     }
     function getPlayer():Player{
         return $this->player;
@@ -29,6 +31,11 @@ class Blackjack{
         }
     }
     function resolvePlayerAction():void{
+        if(isset($_POST['bet'])){
+            $bettingValue = intval($_POST['bettingSlider']);
+            $this->player->setBet($bettingValue);
+        }
+        if($this->player->hasBet()){
         if(isset($_POST['hit'])){
             if($this->player->didTurnEnd()){
                 return;
@@ -39,27 +46,49 @@ class Blackjack{
             $this->player->endTurn();
             $this->dealer->hit($this->deck);
             $this->resolveGame();
-        }else if(isset($_POST['surrender'])){
-            $this->player->lose();
+        }else if(isset($_POST['nextRound'])){
+            $this->startNewRound();
         }
+    }
+    }
+    function startNewRound():void{
+        unset($this->deck);
+        $this->deck = new Deck();
+        $this->player->startNewRound($this->deck);
+        $this->dealer->startNewRound($this->deck);
     }
     function resolveGame(){
        if($this->player->hasLost()){
         return;
        }else if ($this->dealer->hasLost()){
+        $this->player->addChips(($this->player->getBet()*2));
         return;
        }else{
         if($this->player->getScore()>$this->dealer->getScore()){
             $this->dealer->lose();
+            $this->player->addChips(($this->player->getBet()*2));
         }else{
             $this->player->lose();
         }
        }
     }
+    function checkFor21():void{
+        if($this->player->getScore()===21){
+            $this->dealer->lose();
+            $this->player->addChips(50);
+        }
+    }
     function checkForLoser():bool{
         if($this->player->hasLost()){
             return true;
         }else if ($this->dealer->hasLost()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function checkForGameOver():bool{
+        if($this->player->getChips()<=0){
             return true;
         }else{
             return false;

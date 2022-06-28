@@ -36,6 +36,7 @@ class Player
     }
     function setBet(int $amount):void{
         $this->bet = $amount;
+        $this->removeChips($amount);
         $this->hasBet = true;
     }
     function hasBet():bool{
@@ -46,6 +47,20 @@ class Player
     }
     function getChips():int{
         return $this->chips;
+    }
+    function addChips(int $amount):void{
+        if($amount<0){
+            return;
+        }else{
+            $this->chips+=$amount;
+        }
+    }
+    function removeChips(int $amount):void{
+        if(($this->chips-$amount)<0){
+            $this->chips=0;
+        }else{
+            $this->chips-=$amount;
+        }
     }
     function surrender():void{
         $this->lost = true;
@@ -75,6 +90,14 @@ class Player
     }
     function didTurnEnd():bool{
         return $this->turnEnded;
+    }
+    function startNewRound(Deck $newDeck):void{
+        $this->lost = false;
+        $this->cards = [];
+        $this->cards[] = $newDeck->drawCard();
+        $this->cards[] = $newDeck->drawCard();
+        $this->turnEnded = false;
+        $this->hasBet = false;
     }
 }
 class Dealer extends Player{

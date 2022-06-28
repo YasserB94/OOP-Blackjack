@@ -11,8 +11,13 @@ if(!$game->checkForLoser()){
     //If there is a loser
     if($game->getPlayer()->hasLost()){
         //IF Player lost
+        $game->resolvePlayerAction();
+
     }else if($game->getDealer()->hasLost()){
         //IF DEALER LOST
+
+        $game->resolvePlayerAction();
+
     }
 }
 ?>
@@ -55,46 +60,61 @@ if(!$game->checkForLoser()){
 <!--IF PLAYER HAS NO BET YET-->
 <?php if(!$game->getPlayer()->hasBet()):?>
     <div class="text-center mx-auto row border border-danger border-2 p-2 rounded m-3" style="width:80%">
-        <label for="bettingRange" class="form-label">Please place your Bet</label>
+        <label for="bettingRange" class="form-label">Please place your Bet, It's double or nothing!</label>
         <form method="post">
-            <input class="row mx-auto"type="range" name="bettingRange" id="bettingRange" value="5" min="5" max="<?=$game->getPlayer()->getChips()?>" step="5"  onchange="updateBettingSliderIndicator(this.value);"></input>
+            <input class="row mx-auto"type="range" name="bettingSlider" id="bettingRange" value="5" min="5" max="<?=$game->getPlayer()->getChips()?>" step="5"  onchange="updateBettingSliderIndicator(this.value);"></input>
             <input class="row mx-auto btn btn-warning" style="width:30%" type="submit" value="Bet!" name="bet">
         </form>
         <p>Your current Bet:<span id="bettingSliderIndicator">5</span></p>
     </div>
 <?php endif?>
 <!--If No one lost-->
-<?php if(!$game->checkForLoser()) :?>
+<?php if(!$game->checkForLoser() && $game->getPlayer()->hasBet()) :?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
+<p>You have Bet: <?=$game->getPlayer()->getBet()?> credits</p>
     <form  method="post">
         <h3>Please Choose your next move:</h3>
         <input type="submit" value="Hit" name="hit" class="btn btn-warning" style="width:25%"></input>
         <input type="submit" value="Stand" name ="stand" class="btn btn-success" style="width:25%"></input>
-        <input type="submit" value="Surrender" name="surrender"class="btn btn-danger" style="width:25%"></input>
     </form>
 </div>
 <!--If there is a loser-->
-<?php else:?>
+<?php elseif($game->checkForLoser()):?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
     <h3>GAME OVER</h3>
     <!-- if the player lost -->
     <?php if($game->getPlayer()->hasLost()):?>
-    <div class="alert alert-danger"><p>The Dealer Won</p></div>
+    <div class="alert alert-danger"><p>The Dealer Won</p>
+<p>You lost:<?=$game->getPlayer()->getBet()?> chips</p>
+</div>
     <!--If The Dealer Lost-->
     <?php elseif($game->getDealer()->hasLost()):?>
-        <div class="alert alert-success"><p>Congratulations, you won!</p></div>
+        <div class="alert alert-success"><p>Congratulations!</p>
+    <p>You won:<?=$game->getPlayer()->getBet()*2?> chips</p>
+    </div>
     <?php endif?>
-    <!--RESTART BUTTON-->
     <form method="post">
-        <input type="submit" value="restart" name='restart' class="btn btn-success">
+        <input type="submit" value="Play Again" name='nextRound' class="btn btn-success mx-auto">
     </form>
 </div>
 <?php endif?>
+<div class="alert alert-info mx-auto mt-3 text-center" style="width:50%" role="alert">
+  <p class="my-auto">You currently have <?=$game->getPlayer()->getChips()?> chips</p>
+</div>
+
 <!--CLOSE CONTAINER BOOTSTRAP-->
 </div>
-<!---SERIALIZE GAME-->
+<!--RESTART IF LOW ON CHIPS-->
+<?php if($game->getPlayer()->getChips()<5):?>
+    <div class="alert alert-danger mx-auto m-2 text-center">
+        <p>It appears you are pretty low on chips, would you like to start over ?</p>
+
+    <form method="post">
+        <input type="submit" value="Start Over" name='restart' class="btn btn-danger">
+    </form>
+    </div>
+    <?php endif?>
+
 <?php 
-if(isset($_SESSION['game'])){
-$_SESSION['game'] = serialize($game);
-}
+$_SESSION['game']=serialize($game);
 ?>

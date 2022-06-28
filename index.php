@@ -16,6 +16,7 @@ if(!isset($_POST['startgame']) && !isset($_SESSION['game']) &&!isset($_POST['res
 require_once __DIR__ . "/Partials/rules.php";
 //IF GAME WAS STARTED
 }else if(isset($_POST['startgame'])||isset($_POST['restart'])){
+    unset($_SESSION['game']);
     //CREATE NEW GAME
     $game = new Blackjack();
     $serialized = serialize($game);
