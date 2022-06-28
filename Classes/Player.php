@@ -20,6 +20,7 @@ class Player
         $this->chips = 100;
         $this->bet = 5;
         $this->hasBet = false;
+        $this->checkForDoubleAce($deck);
     }
     function hit($deck){
         //Has Player ended turn yet ?
@@ -33,6 +34,12 @@ class Player
             return;
         }
     }
+    }
+    function checkForDoubleAce($deck){
+        if($this->getScore()>21){
+            array_pop($this->cards);
+            $this->cards[]=$deck->drawCard();
+        }
     }
     function setBet(int $amount):void{
         $this->bet = $amount;
