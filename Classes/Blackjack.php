@@ -54,6 +54,7 @@ class Blackjack{
     function startNewRound():void{
         unset($this->deck);
         $this->deck = new Deck();
+        $this->deck->shuffle();
         $this->player->startNewRound($this->deck);
         $this->dealer->startNewRound($this->deck);
     }
@@ -74,8 +75,10 @@ class Blackjack{
     }
     function checkFor21():void{
         if($this->player->getScore()===21){
+            $this->player->setBet(100);
             $this->dealer->lose();
-            $this->player->addChips(50);
+            $this->player->addChips(100);
+
         }
     }
     function checkForLoser():bool{

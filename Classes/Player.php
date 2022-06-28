@@ -93,11 +93,12 @@ class Player
     }
     function startNewRound(Deck $newDeck):void{
         $this->lost = false;
+        $this->turnEnded = false;
+        $this->hasBet = false;
         $this->cards = [];
         $this->cards[] = $newDeck->drawCard();
         $this->cards[] = $newDeck->drawCard();
-        $this->turnEnded = false;
-        $this->hasBet = false;
+        $this->bet=5;
     }
 }
 class Dealer extends Player{
@@ -106,7 +107,7 @@ class Dealer extends Player{
     }
     function hit($deck){
         //Keep drawing untill score >=15
-        if(parent::getScore()<15){
+        while(parent::getScore()<15){
         parent::hit($deck);
         }
     }

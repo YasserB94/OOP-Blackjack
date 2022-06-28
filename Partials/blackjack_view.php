@@ -58,11 +58,11 @@ if(!$game->checkForLoser()){
 <!---GAME CONTROLS-->
 <!--BETTING-->
 <!--IF PLAYER HAS NO BET YET-->
-<?php if(!$game->getPlayer()->hasBet()):?>
+<?php if((!$game->getPlayer()->hasBet())&&(!isset($_POST['stand']))):?>
     <div class="text-center mx-auto row border border-danger border-2 p-2 rounded m-3" style="width:80%">
         <label for="bettingRange" class="form-label">Please place your Bet, It's double or nothing!</label>
         <form method="post">
-            <input class="row mx-auto"type="range" name="bettingSlider" id="bettingRange" value="5" min="5" max="<?=$game->getPlayer()->getChips()?>" step="5"  onchange="updateBettingSliderIndicator(this.value);"></input>
+            <input class="row mx-auto mb-2"type="range" name="bettingSlider" id="bettingRange" value="5" min="5" max="<?=$game->getPlayer()->getChips()?>" step="5"  onchange="updateBettingSliderIndicator(this.value);"></input>
             <input class="row mx-auto btn btn-warning" style="width:30%" type="submit" value="Bet!" name="bet">
         </form>
         <p>Your current Bet:<span id="bettingSliderIndicator">5</span></p>
@@ -81,7 +81,6 @@ if(!$game->checkForLoser()){
 <!--If there is a loser-->
 <?php elseif($game->checkForLoser()):?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
-    <h3>GAME OVER</h3>
     <!-- if the player lost -->
     <?php if($game->getPlayer()->hasLost()):?>
     <div class="alert alert-danger"><p>The Dealer Won</p>
@@ -93,9 +92,11 @@ if(!$game->checkForLoser()){
     <p>You won:<?=$game->getPlayer()->getBet()*2?> chips</p>
     </div>
     <?php endif?>
+    <?php if($game->getPlayer()->getChips()>5):?>
     <form method="post">
         <input type="submit" value="Play Again" name='nextRound' class="btn btn-success mx-auto">
     </form>
+    <?php endif?>
 </div>
 <?php endif?>
 <div class="alert alert-info mx-auto mt-3 text-center" style="width:50%" role="alert">
@@ -105,10 +106,9 @@ if(!$game->checkForLoser()){
 <!--CLOSE CONTAINER BOOTSTRAP-->
 </div>
 <!--RESTART IF LOW ON CHIPS-->
-<?php if($game->getPlayer()->getChips()<5):?>
+<?php if(($game->getPlayer()->getChips()<=5)&&isset($_POST['stand'])):?>
     <div class="alert alert-danger mx-auto m-2 text-center">
-        <p>It appears you are pretty low on chips, would you like to start over ?</p>
-
+        <p>It appears you are pretty low on chips, would you like to start a new game ?</p>
     <form method="post">
         <input type="submit" value="Start Over" name='restart' class="btn btn-danger">
     </form>
