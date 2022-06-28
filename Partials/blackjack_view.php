@@ -106,7 +106,7 @@ if(!$game->checkForLoser()){
 <!--CLOSE CONTAINER BOOTSTRAP-->
 </div>
 <!--RESTART IF LOW ON CHIPS-->
-<?php if(($game->getPlayer()->getChips()<=5)&&isset($_POST['stand'])):?>
+<?php if(($game->getPlayer()->getChips()<=5)&&(isset($_POST['stand'])||(isset($_POST['hit'])&&($game->getPlayer()->hasLost())))):?>
     <div class="alert alert-danger mx-auto m-2 text-center">
         <p>It appears you are pretty low on chips, would you like to start a new game ?</p>
     <form method="post">
