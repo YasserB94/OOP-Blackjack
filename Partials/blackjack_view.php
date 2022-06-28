@@ -51,6 +51,18 @@ if(!$game->checkForLoser()){
     </div>
 </div>
 <!---GAME CONTROLS-->
+<!--BETTING-->
+<!--IF PLAYER HAS NO BET YET-->
+<?php if(!$game->getPlayer()->hasBet()):?>
+    <div class="text-center mx-auto row border border-danger border-2 p-2 rounded m-3" style="width:80%">
+        <label for="bettingRange" class="form-label">Please place your Bet</label>
+        <form method="post">
+            <input class="row mx-auto"type="range" name="bettingRange" id="bettingRange" value="5" min="5" max="<?=$game->getPlayer()->getChips()?>" step="5"  onchange="updateBettingSliderIndicator(this.value);"></input>
+            <input class="row mx-auto btn btn-warning" style="width:30%" type="submit" value="Bet!" name="bet">
+        </form>
+        <p>Your current Bet:<span id="bettingSliderIndicator">5</span></p>
+    </div>
+<?php endif?>
 <!--If No one lost-->
 <?php if(!$game->checkForLoser()) :?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
@@ -78,6 +90,8 @@ if(!$game->checkForLoser()){
     </form>
 </div>
 <?php endif?>
+<!--CLOSE CONTAINER BOOTSTRAP-->
+</div>
 <!---SERIALIZE GAME-->
 <?php 
 if(isset($_SESSION['game'])){

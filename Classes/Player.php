@@ -9,13 +9,17 @@ class Player
     protected int $score;
     protected bool $turnEnded;
     protected int $chips;
-    
+    protected int $bet;
+    protected bool $hasBet;
     function __construct(Deck $deck){
         //Draw starting hand
         $this->cards[] = $deck->drawCard();
         $this->cards[] = $deck->drawCard();
         $this->lost = false;
         $this->turnEnded = false;
+        $this->chips = 100;
+        $this->bet = 5;
+        $this->hasBet = false;
     }
     function hit($deck){
         //Has Player ended turn yet ?
@@ -29,6 +33,19 @@ class Player
             return;
         }
     }
+    }
+    function setBet(int $amount):void{
+        $this->bet = $amount;
+        $this->hasBet = true;
+    }
+    function hasBet():bool{
+        return $this->hasBet;
+    }
+    function getBet():int{
+        return $this->bet;
+    }
+    function getChips():int{
+        return $this->chips;
     }
     function surrender():void{
         $this->lost = true;
