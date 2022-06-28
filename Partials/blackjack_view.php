@@ -4,34 +4,16 @@ declare(strict_types=1);
 $unserializedGame = unserialize($_SESSION['game']);
 $game = $unserializedGame;
 //GAME LOGIC
-//PLAYER CHOSES HIT
-if(isset($_POST['hit'])){
-    //DRAW CARD
-    $game->getPlayer()->hit($game->getDeck());
-    //CHECK IF PLAYER LOST
+if(!$game->checkForLoser()){
+    //If There is no loser
+    $game->resolvePlayerAction();
+}else{
+    //If there is a loser
     if($game->getPlayer()->hasLost()){
-        $winner = 'Dealer';
-        unset($_SESSION['game']);
-    };
-}
-//PLAYER CHOSES STAND
-else if(isset($_POST['stand'])){
-    $game->getDealer()->hit($game->getDeck());
-    //Check If Dealer lost
-    if($game->getDealer()->hasLost()){
-        $winner = 'Player';
-        unset($_SESSION['game']);
+        //IF Player lost
+    }else if($game->getDealer()->hasLost()){
+        //IF DEALER LOST
     }
-    //Resolve Winner
-    else{
-    $winner = $game->getWinner();
-    unset($_SESSION['game']);
-    }
-}
-//PLAYER SURRENDERS
-else if(isset($_POST['surrender'])){
-    $winner = 'Dealer';
-    unset($_SESSION['game']);
 }
 ?>
 <!--END LOGIC-->
@@ -53,15 +35,14 @@ else if(isset($_POST['surrender'])){
     <!--DEALER STATS-->
     <div class="col border-bottom border-top border-dark border-1 p-5" >
     <h3>Dealer</h3>
-    <!--IF DEALER HAS PLAYER-->
         <?php
-        //IF PLAYER DID NOT CHOSE STAND - Show 1 card and it's value
-            if(!isset($_POST['stand'])):?>
+        //If the player is still playing only show the dealer's first card and value
+        if(!$game->getPlayer()->didTurnEnd()):?>
         <p>Score: <?=$game->getDealer()->getCards()[0]->getValue();?></p>
         <span style="font-size:6rem"><?=$game->getDealer()->getCards()[0]->getUnicodeCharacter(true)?></span>
-        <?php else:
-        //SHOW ALL CARDS AND TOTAL SCORE
-        ?>
+        <span style="font-size:6rem">&#127136;</span>
+        <!--If The player ended their turn already show all the dealers cards-->
+        <?php elseif($game->getPlayer()->didTurnEnd()):?>
             <p>Score:<?php echo $game->getDealer()->getScore()?></p>
         <?php foreach($game->getDealer()->getCards() as $key =>$value){
                 echo '<span style="font-size:6rem">'.$value->getUnicodeCharacter(true).'</span>';
@@ -70,7 +51,8 @@ else if(isset($_POST['surrender'])){
     </div>
 </div>
 <!---GAME CONTROLS-->
-<?php if(isset($_SESSION['game'])) :?>
+<!--If No one lost-->
+<?php if(!$game->checkForLoser()) :?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
     <form  method="post">
         <h3>Please Choose your next move:</h3>
@@ -79,14 +61,18 @@ else if(isset($_POST['surrender'])){
         <input type="submit" value="Surrender" name="surrender"class="btn btn-danger" style="width:25%"></input>
     </form>
 </div>
+<!--If there is a loser-->
 <?php else:?>
 <div class="text-center mx-auto mt-5 row" style="width:80%">
     <h3>GAME OVER</h3>
-    <?php if(isset($winner)):?>
-        <div class="alert <?php if($winner!=='Dealer'){echo 'alert-success';}else{echo 'alert-danger';}?>" role="alert">
-        <h2><?=$winner?> has won!</h2>
-    </div>
+    <!-- if the player lost -->
+    <?php if($game->getPlayer()->hasLost()):?>
+    <div class="alert alert-danger"><p>The Dealer Won</p></div>
+    <!--If The Dealer Lost-->
+    <?php elseif($game->getDealer()->hasLost()):?>
+        <div class="alert alert-success"><p>Congratulations, you won!</p></div>
     <?php endif?>
+    <!--RESTART BUTTON-->
     <form method="post">
         <input type="submit" value="restart" name='restart' class="btn btn-success">
     </form>

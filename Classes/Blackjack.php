@@ -21,13 +21,49 @@ class Blackjack{
     function getDeck():Deck{
         return $this->deck;
     }
-    function getWinner(){
+    function getWinner():string{
         if($this->player->getScore()>$this->dealer->getScore()){
             return 'Player';
         }else{
             return 'Dealer';
         }
     }
+    function resolvePlayerAction():void{
+        if(isset($_POST['hit'])){
+            if($this->player->didTurnEnd()){
+                return;
+            }else{
+            $this->player->hit($this->deck);
+            }
+        }else if(isset($_POST['stand'])){
+            $this->player->endTurn();
+            $this->dealer->hit($this->deck);
+            $this->resolveGame();
+        }else if(isset($_POST['surrender'])){
+            $this->player->lose();
+        }
+    }
+    function resolveGame(){
+       if($this->player->hasLost()){
+        return;
+       }else if ($this->dealer->hasLost()){
+        return;
+       }else{
+        if($this->player->getScore()>$this->dealer->getScore()){
+            $this->dealer->lose();
+        }else{
+            $this->player->lose();
+        }
+       }
+    }
+    function checkForLoser():bool{
+        if($this->player->hasLost()){
+            return true;
+        }else if ($this->dealer->hasLost()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
-
 ?>

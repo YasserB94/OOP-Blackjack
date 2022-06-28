@@ -7,6 +7,7 @@ class Player
     protected array $cards;
     protected bool $lost;
     protected int $score;
+    protected bool $turnEnded;
     protected int $chips;
     
     function __construct(Deck $deck){
@@ -14,19 +15,22 @@ class Player
         $this->cards[] = $deck->drawCard();
         $this->cards[] = $deck->drawCard();
         $this->lost = false;
-        $this->chips = 100;
+        $this->turnEnded = false;
     }
     function hit($deck){
+        //Has Player ended turn yet ?
+        if($this->didTurnEnd()){return;}else{
         //Add a card
         $this->cards[] = $deck->drawCard();
         //If new score is too high, surrender
         if($this->getScore()>21){
-            $this->surrender();
+            $this->lose();
         }else{
             return;
         }
     }
-    function surrender(){
+    }
+    function surrender():void{
         $this->lost = true;
     }
     function getScore():Int{
@@ -37,11 +41,23 @@ class Player
         }
         return $this->score;
     }
+    function lose():void{
+        $this->lost = true;
+    }
     function hasLost():bool{
         return $this->lost;
     }
     function getCards():array{
         return $this->cards;
+    }
+    function startTurn():void{
+        $this->turnEnded = false;
+    }
+    function endTurn():void{
+        $this->turnEnded = true;
+    }
+    function didTurnEnd():bool{
+        return $this->turnEnded;
     }
 }
 class Dealer extends Player{
