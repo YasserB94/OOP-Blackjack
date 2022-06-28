@@ -23,9 +23,9 @@ class Blackjack{
     }
     function getWinner(){
         if($this->player->getScore()>$this->dealer->getScore()){
-            return 'player';
+            return 'Player';
         }else{
-            return 'dealer';
+            return 'Dealer';
         }
     }
 }

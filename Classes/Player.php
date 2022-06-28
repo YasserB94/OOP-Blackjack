@@ -7,12 +7,14 @@ class Player
     protected array $cards;
     protected bool $lost;
     protected int $score;
+    protected int $chips;
     
     function __construct(Deck $deck){
         //Draw starting hand
         $this->cards[] = $deck->drawCard();
         $this->cards[] = $deck->drawCard();
         $this->lost = false;
+        $this->chips = 100;
     }
     function hit($deck){
         //Add a card

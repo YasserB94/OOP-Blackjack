@@ -30,6 +30,7 @@ else if(isset($_POST['stand'])){
 }
 //PLAYER SURRENDERS
 else if(isset($_POST['surrender'])){
+    $winner = 'Dealer';
     unset($_SESSION['game']);
 }
 ?>
@@ -82,7 +83,7 @@ else if(isset($_POST['surrender'])){
 <div class="text-center mx-auto mt-5 row" style="width:80%">
     <h3>GAME OVER</h3>
     <?php if(isset($winner)):?>
-        <div class="alert alert-success" role="alert">
+        <div class="alert <?php if($winner!=='Dealer'){echo 'alert-success';}else{echo 'alert-danger';}?>" role="alert">
         <h2><?=$winner?> has won!</h2>
     </div>
     <?php endif?>

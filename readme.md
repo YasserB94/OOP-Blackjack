@@ -63,11 +63,11 @@ Some code was provided by the exercise:
         - Initiates dealer:Player,player:Player,deck:Deck
         - Shuffles deck
 ### Index.php
-- [ ] Start game
+- [x] Start game
     - Creates new Blackjack object
         - Shows Player side
         - Shows Dealer side
-- [ ] Add buttons for actions with php
+- [x] Add buttons for actions with php
     - Hit
         - Check the lost status of the player
         - Will need the active deck (Blackjack::getDeck();)
@@ -76,6 +76,13 @@ Some code was provided by the exercise:
         - if dealer != lost > Resolve winner
         - if score===equal dealer wins
     - Surrender
-- [ ] End game
+- [x] End game
     - Show winner
     - destroy blackjack instance to prep for newGame();
+
+#### Progress
+- Class creation
+    - Not much to say here, love that Deck,Card and Suit were provided by the exercise
+- Start Game
+    - Mhm Lets fill up the body with other files depending on the form submited;
+    - How do I pass my current gameObject from 1 file to another ? -> serialize(new Blackjack())
