@@ -5,20 +5,7 @@ declare(strict_types=1);
 $unserializedGame = unserialize($_SESSION['game']);
 $game = $unserializedGame;
 //GAME LOGIC
-if (!$game->checkForLoser()) {
-    //If There is no loser
-    $game->resolvePlayerAction();
-} else {
-    //If there is a loser
-    if ($game->getPlayer()->hasLost()) {
-        //IF Player lost
-        $game->resolvePlayerAction();
-    } else if ($game->getDealer()->hasLost()) {
-        //IF DEALER LOST
-
-        $game->resolvePlayerAction();
-    }
-}
+$game->resolvePlayerAction();
 
 ?>
 <!--END LOGIC-->
@@ -104,7 +91,6 @@ if (!$game->checkForLoser()) {
         <div class="alert alert-info mx-auto mt-1 text-center" style="width:50%" role="alert">
             <p class="my-auto">You currently have <?= $game->getPlayer()->getChips() ?> chips</p>
         </div>
-
         <!--CLOSE CONTAINER BOOTSTRAP-->
     </div>
     <!--RESTART IF LOW ON CHIPS-->
@@ -116,7 +102,6 @@ if (!$game->checkForLoser()) {
             </form>
         </div>
     <?php endif ?>
-
     <?php
     $_SESSION['game'] = serialize($game);
     ?>
