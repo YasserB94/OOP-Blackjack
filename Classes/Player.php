@@ -29,6 +29,7 @@ class Player
         $this->cards[] = $deck->drawCard();
         //If new score is too high, surrender
         if($this->getScore()>21){
+            $this->endTurn();
             $this->lose();
         }else{
             return;
@@ -128,4 +129,3 @@ class Dealer extends Player{
         return parent::getCards()[0];
     }
 }
-?>
