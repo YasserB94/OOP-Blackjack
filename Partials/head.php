@@ -1,7 +1,9 @@
 <?php
-declare(strict_types=1);?>
+
+declare(strict_types=1); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +13,12 @@ declare(strict_types=1);?>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!--Main Styles CSS File-->
-     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
-<!-- Open Bootstrap container-->    
-<div class="container">
-<header class="border-bottom mb-2">
-<h1 class="text-center mt-2">BlackJack in PHP</h1>
-</header>
+    <!-- Open Bootstrap container-->
+    <div class="container">
+        <header class="border-bottom">
+            <h1 class="text-center">BlackJack in PHP</h1>
+        </header>
