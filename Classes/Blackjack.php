@@ -83,6 +83,7 @@ class Blackjack{
             }
             $this->player->setBetEdgeCase($award/2);
             $this->player->addChips($award);
+            $this->player->endTurn();
             $this->dealer->lose();
         }else if($this->dealer->getScore()===21){
             if($this->player->getChips()<100){
@@ -92,6 +93,7 @@ class Blackjack{
             }
             $this->player->setBetEdgeCase($punishment/2);
             $this->player->removeChips($punishment);
+            $this->player->endTurn();
             $this->player->lose();
         }
     }
@@ -112,4 +114,3 @@ class Blackjack{
         }
     }
 }
-?>
